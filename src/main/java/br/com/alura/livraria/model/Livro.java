@@ -1,15 +1,26 @@
 package br.com.alura.livraria.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Livro {
 	
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String titulo;
 	private String isbn;
 	private double preco;
-	private String dataLancamento;
+	private Date dataLancamento;
+	
+	@ManyToMany
 	private List<Autor> autores = new ArrayList<>();
 	
 
@@ -56,11 +67,11 @@ public class Livro {
 		this.preco = preco;
 	}
 
-	public String getDataLancamento() {
+	public Date getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(String dataLancamento) {
+	public void setDataLancamento(Date dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 	

@@ -18,7 +18,7 @@
 			<property name="javax.persistence.jdbc.password"
 				value="root" />
 
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 
 			  <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 
