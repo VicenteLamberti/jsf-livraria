@@ -3,8 +3,12 @@ package br.com.alura.livraria.bean;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import br.com.alura.livraria.dao.DAO;
 import br.com.alura.livraria.model.Autor;
@@ -43,7 +47,9 @@ public class LivroBean {
 	public void gravar() {
 		System.out.println("Gravando livro " + livro.getTitulo());
 		if(livro.getAutores().isEmpty()) {
-			throw new RuntimeException("Livro deve ter pelo menos um autor");
+//			throw new RuntimeException("Livro deve ter pelo menos um autor");
+			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um autor"));
+			return;
 		}
 		new DAO<Livro>(Livro.class).adiciona(this.livro);
 		this.livro = new Livro();
@@ -62,8 +68,15 @@ public class LivroBean {
 	
 	public void gravarAutor() {
 		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
-		System.out.println(autor.getNome() + "KKKKKKKKKKKKKKKKKKKKKK");
+		System.out.println("Associando autor " + autor.getNome() + " ao livro " + livro.getTitulo());
 		this.livro.adicionaAutor(autor);
+	}
+	
+	public void comecaComDigitoUm(FacesContext fc, UIComponent componente, Object value) {
+		String valor = value.toString();
+		if(!valor.startsWith("1")) {
+			throw new ValidatorException(new FacesMessage("ISBN deve começar com 1"));
+		}
 	}
 
 }
