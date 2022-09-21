@@ -56,10 +56,9 @@ public class LivroBean {
 	}
 	
 	public List<Autor> getAutores(){
-		System.out.println("KSOPAKSPOAKSPO");
-		List<Autor> buscaTodos = new DAO<Autor>(Autor.class).buscaTodos();
-		buscaTodos.forEach(x->System.out.println(x.getNome()));
-		return buscaTodos;
+		List<Autor> autores = new DAO<Autor>(Autor.class).buscaTodos();
+		autores.forEach(x->System.out.println(x.getNome()));
+		return autores;
 	}
 	
 	public List<Autor> getAutoresDoLivro(){
@@ -77,6 +76,10 @@ public class LivroBean {
 		if(!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage("ISBN deve começar com 1"));
 		}
+	}
+	
+	public List<Livro> getLivrosCadastrados(){
+		return new DAO<Livro>(Livro.class).buscaTodos();
 	}
 
 }

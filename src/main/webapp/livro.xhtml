@@ -19,7 +19,9 @@
 				<h:inputText id="isbn" value="#{livroBean.livro.isbn}" validator="#{livroBean.comecaComDigitoUm}"/>
 
 				<h:outputLabel value="Preço" for="preco" />
-				<h:inputText id="preco" value="#{livroBean.livro.preco}" />
+				<h:inputText id="preco" value="#{livroBean.livro.preco}" validatorMessage="Preço - mínimo 10.00 - máximo 1000.00">
+					<f:validateDoubleRange minimum="10.00" maximum="1000.00"/>
+				</h:inputText>
 
 				<h:outputLabel value="Data Lançamento" for="dataLancamento" />
 				<h:inputText id="dataLancamento" value="#{livroBean.livro.dataLancamento}" >
@@ -52,6 +54,33 @@
 		<h:commandButton value="Gravar" action="#{livroBean.gravar}"/>
 
 	</h:form>
+	
+	<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange" border="2"  value = "#{livroBean.livrosCadastrados}" var = "livroCadastrado">
+		
+		<h:column>
+			<f:facet name="header">Título</f:facet>
+			<h:outputText value = "#{livroCadastrado.titulo}"/>
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">ISBN</f:facet>
+			<h:outputText value="#{livroCadastrado.isbn}"/>
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Preço</f:facet>
+			<h:outputText value="#{livroCadastrado.preco}">
+				<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="$" locale="pt_BR" />
+			</h:outputText>
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Data Lançamento</f:facet>
+			<h:outputText value="#{livroCadastrado.dataLancamento}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</h:column>
+	</h:dataTable>
 
 </h:body>
 
