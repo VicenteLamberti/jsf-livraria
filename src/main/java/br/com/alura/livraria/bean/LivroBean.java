@@ -81,5 +81,9 @@ public class LivroBean {
 	public List<Livro> getLivrosCadastrados(){
 		return new DAO<Livro>(Livro.class).buscaTodos();
 	}
+	
+	public String formAutor() {
+		return "autor?faces-redirect=true";
+	}
 
 }
