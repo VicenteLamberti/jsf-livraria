@@ -2,95 +2,110 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<h:head/>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:body>
-	<h:form>
-		<fieldset>
-			<h:messages id="messages"/>
-			<legend>Dados do Livro</legend>
-			<h:panelGrid columns="2">
-				<h:outputLabel value="Titulo"  for="titulo" />
-				<h:inputText id="titulo"  value="#{livroBean.livro.titulo}" required="true" requiredMessage="Título obrigatório" validatorMessage="Título - tamanho mínimo - máximo 40">
-					<f:validateLength maximum="40" minimum="3"/>
-					<f:ajax event="blur" render="messages"/>
-				</h:inputText>
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
+			LIVRO
+		</ui:define>
 
-				<h:outputLabel value="ISBN" for="isbn" />
-				<h:inputText id="isbn" value="#{livroBean.livro.isbn}" validator="#{livroBean.comecaComDigitoUm}"/>
 
-				<h:outputLabel value="Preço" for="preco" />
-				<h:inputText id="preco" value="#{livroBean.livro.preco}" validatorMessage="Preço - mínimo 10.00 - máximo 1000.00">
-					<f:validateDoubleRange minimum="10.00" maximum="1000.00"/>
-				</h:inputText>
+	<ui:define name="conteudo">
+		<h:form>
+			<fieldset>
+				<h:messages id="messages" />
+				<legend>Dados do Livro</legend>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Titulo" for="titulo" />
+					<h:inputText id="titulo" value="#{livroBean.livro.titulo}"
+						required="true" requiredMessage="Título obrigatório"
+						validatorMessage="Título - tamanho mínimo - máximo 40">
+						<f:validateLength maximum="40" minimum="3" />
+						<f:ajax event="blur" render="messages" />
+					</h:inputText>
 
-				<h:outputLabel value="Data Lançamento" for="dataLancamento" />
-				<h:inputText id="dataLancamento" value="#{livroBean.livro.dataLancamento}" >
-					<f:convertDateTime pattern="dd/MM/yyyy"/>
-				</h:inputText>
+					<h:outputLabel value="ISBN" for="isbn" />
+					<h:inputText id="isbn" value="#{livroBean.livro.isbn}"
+						validator="#{livroBean.comecaComDigitoUm}" />
 
-			</h:panelGrid>
+					<h:outputLabel value="Preço" for="preco" />
+					<h:inputText id="preco" value="#{livroBean.livro.preco}"
+						validatorMessage="Preço - mínimo 10.00 - máximo 1000.00">
+						<f:validateDoubleRange minimum="10.00" maximum="1000.00" />
+					</h:inputText>
 
-		</fieldset>
-		
-		<fieldset>
-			<legend>Dados do Autor</legend>
-			<h:outputLabel value="Selecione o autor" for = "autor"/>
-			<h:selectOneMenu value="#{livroBean.autorId}" id="autor">
-				<f:selectItems 
-				value="#{livroBean.autores}"
-				var="autor"
-				itemLabel="#{autor.nome}"
-				itemValue="#{autor.id}"/>
-			</h:selectOneMenu>
-			<h:commandButton value="Gravar Autor" action="#{livroBean.gravarAutor}">
-				<f:ajax  execute="autor" render="tabelaAutores"/>
+					<h:outputLabel value="Data Lançamento" for="dataLancamento" />
+					<h:inputText id="dataLancamento"
+						value="#{livroBean.livro.dataLancamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:inputText>
+
+				</h:panelGrid>
+
+			</fieldset>
+
+			<fieldset>
+				<legend>Dados do Autor</legend>
+				<h:outputLabel value="Selecione o autor" for="autor" />
+				<h:selectOneMenu value="#{livroBean.autorId}" id="autor">
+					<f:selectItems value="#{livroBean.autores}" var="autor"
+						itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
+				</h:selectOneMenu>
+				<h:commandButton value="Gravar Autor"
+					action="#{livroBean.gravarAutor}">
+					<f:ajax execute="autor" render="tabelaAutores" />
+				</h:commandButton>
+
+				<br />
+				<h:commandLink value="Cadastrar novo autor"
+					action="#{livroBean.formAutor}" immediate="true" />
+
+				<h:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
+					id="tabelaAutores">
+					<h:column>
+						<h:outputText value="#{autor.nome}" />
+					</h:column>
+				</h:dataTable>
+
+			</fieldset>
+			<h:commandButton value="Gravar" action="#{livroBean.gravar}">
+				<f:ajax execute="@form" render="@form :tabelaLivros" />
 			</h:commandButton>
-			
-			<br/>
-			<h:commandLink value="Cadastrar novo autor" action="#{livroBean.formAutor}" immediate="true"/>
-			
-			<h:dataTable value ="#{livroBean.autoresDoLivro}" var ="autor" id="tabelaAutores">
-				<h:column>
-					<h:outputText value ="#{autor.nome}"/>
-				</h:column>
-			</h:dataTable>
-			
-		</fieldset>
-		<h:commandButton value="Gravar" action="#{livroBean.gravar}">
-			<f:ajax execute="@form" render="@form :tabelaLivros"/>
-		</h:commandButton>
 
-	</h:form>
-	
-	<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange" border="2"  value = "#{livroBean.livrosCadastrados}" var = "livroCadastrado" id="tabelaLivros">
-		
-		<h:column>
-			<f:facet name="header">Título</f:facet>
-			<h:outputText value = "#{livroCadastrado.titulo}"/>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">ISBN</f:facet>
-			<h:outputText value="#{livroCadastrado.isbn}"/>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">Preço</f:facet>
-			<h:outputText value="#{livroCadastrado.preco}">
-				<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="$" locale="pt_BR" />
-			</h:outputText>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">Data Lançamento</f:facet>
-			<h:outputText value="#{livroCadastrado.dataLancamento}">
-				<f:convertDateTime pattern="dd/MM/yyyy"/>
-			</h:outputText>
-		</h:column>
-	</h:dataTable>
+		</h:form>
 
-</h:body>
+		<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange"
+			border="2" value="#{livroBean.livrosCadastrados}"
+			var="livroCadastrado" id="tabelaLivros">
+
+			<h:column>
+				<f:facet name="header">Título</f:facet>
+				<h:outputText value="#{livroCadastrado.titulo}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">ISBN</f:facet>
+				<h:outputText value="#{livroCadastrado.isbn}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Preço</f:facet>
+				<h:outputText value="#{livroCadastrado.preco}">
+					<f:convertNumber type="currency" pattern="R$ #0.00"
+						currencySymbol="$" locale="pt_BR" />
+				</h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Data Lançamento</f:facet>
+				<h:outputText value="#{livroCadastrado.dataLancamento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+
 
 </html>

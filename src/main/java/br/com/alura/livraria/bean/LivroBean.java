@@ -82,8 +82,8 @@ public class LivroBean {
 		return new DAO<Livro>(Livro.class).buscaTodos();
 	}
 	
-	public String formAutor() {
-		return "autor?faces-redirect=true";
-	}
+//	public String formAutor() {
+//		return "autor?faces-redirect=true";
+//	}
 
 }
