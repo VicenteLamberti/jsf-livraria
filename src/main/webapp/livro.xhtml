@@ -70,40 +70,48 @@
 
 			</fieldset>
 			<h:commandButton value="Gravar" action="#{livroBean.gravar}">
-				<f:ajax execute="@form" render="@form :tabelaLivros" />
+				<f:ajax execute="@form" render="@form :formTabelaLivros:tabelaLivros" />
 			</h:commandButton>
 
 		</h:form>
 
-		<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange"
-			border="2" value="#{livroBean.livrosCadastrados}"
-			var="livroCadastrado" id="tabelaLivros">
+		<h:form id="formTabelaLivros">
+			<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange"
+				border="2" value="#{livroBean.livrosCadastrados}"
+				var="livroCadastrado" id="tabelaLivros">
 
-			<h:column>
-				<f:facet name="header">Título</f:facet>
-				<h:outputText value="#{livroCadastrado.titulo}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Título</f:facet>
+					<h:outputText value="#{livroCadastrado.titulo}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">ISBN</f:facet>
-				<h:outputText value="#{livroCadastrado.isbn}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">ISBN</f:facet>
+					<h:outputText value="#{livroCadastrado.isbn}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Preço</f:facet>
-				<h:outputText value="#{livroCadastrado.preco}">
-					<f:convertNumber type="currency" pattern="R$ #0.00"
-						currencySymbol="$" locale="pt_BR" />
-				</h:outputText>
-			</h:column>
+				<h:column>
+					<f:facet name="header">Preço</f:facet>
+					<h:outputText value="#{livroCadastrado.preco}">
+						<f:convertNumber type="currency" pattern="R$ #0.00"
+							currencySymbol="$" locale="pt_BR" />
+					</h:outputText>
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Data Lançamento</f:facet>
-				<h:outputText value="#{livroCadastrado.dataLancamento}">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
-				</h:outputText>
-			</h:column>
-		</h:dataTable>
+				<h:column>
+					<f:facet name="header">Data Lançamento</f:facet>
+					<h:outputText value="#{livroCadastrado.dataLancamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ação</f:facet>
+					<h:commandLink value="Excluir" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+
 	</ui:define>
 	<ui:define name="textoRodape"> Livro</ui:define>
 </ui:composition>
