@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import br.com.alura.livraria.model.Autor;
+import br.com.alura.livraria.model.Livro;
 
 public class DAO<T> {
 	private final Class<T> classe;
@@ -45,11 +46,23 @@ public class DAO<T> {
 		
 	}
 
-	public T buscaPorId(Long autorId) {
+	public T buscaPorId(Long id) {
 		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
 		EntityManager em = creaEntityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		return em.find(classe, autorId);
+		T obj = em.find(classe, id);
+		em.close();
+		return obj;
+	}
+
+	public void excluir(T obj) {
+		EntityManagerFactory cemf = Persistence.createEntityManagerFactory("livraria");
+		EntityManager em = cemf.createEntityManager();
+		em.getTransaction().begin();
+		T newObj = em.merge(obj);
+		em.remove(newObj);
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	

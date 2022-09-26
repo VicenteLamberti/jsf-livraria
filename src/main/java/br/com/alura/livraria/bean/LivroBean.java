@@ -71,6 +71,11 @@ public class LivroBean {
 		this.livro.adicionaAutor(autor);
 	}
 	
+	public void excluir(Livro livro) {
+		System.out.println("Excluindo livro");
+		new DAO<Livro>(Livro.class).excluir(livro);
+	}
+	
 	public void comecaComDigitoUm(FacesContext fc, UIComponent componente, Object value) {
 		String valor = value.toString();
 		if(!valor.startsWith("1")) {
