@@ -5,14 +5,22 @@
 
     <h:head/>
     <h:body>
-        <div id="cabecalho">
+        <header id="cabecalho">
             <h:graphicImage library="img" name="logo.png" alt="logo"/>
             <h1><ui:insert name="titulo"></ui:insert></h1>
-        </div>
+        </header>
 
-        <div id="conteudo">
+        <main id="conteudo">
             <ui:insert name="conteudo">
             </ui:insert>
-        </div>
+        </main>
+        
+        <footer id="footer">
+        	by Vicente -
+        	<ui:insert name="textoRodape">
+        	
+        	</ui:insert>
+        </footer>
+        
     </h:body>
 </html>
