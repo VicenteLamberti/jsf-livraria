@@ -65,6 +65,17 @@ public class DAO<T> {
 		em.close();
 	}
 
+	public void atualiza(T obj) {
+		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
+		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		T newObj = em.merge(obj);
+		em.persist(newObj);
+		em.getTransaction().commit();
+		em.close();
+		
+	}
+
 	
 	
 

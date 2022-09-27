@@ -106,6 +106,10 @@
 				</h:column>
 
 				<h:column>
+					<f:facet name = "header">Editar</f:facet>
+					<h:commandLink value="Editar" action="#{livroBean.carregar(livroCadastrado)}"/>
+				</h:column>
+				<h:column>
 					<f:facet name="header">Ação</f:facet>
 					<h:commandLink value="Excluir" action="#{livroBean.excluir(livroCadastrado)}" />
 				</h:column>

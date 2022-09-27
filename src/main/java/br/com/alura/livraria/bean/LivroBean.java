@@ -51,7 +51,12 @@ public class LivroBean {
 			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um autor"));
 			return;
 		}
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if(this.livro.getId() == null) {
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		}
+		else {
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
 		this.livro = new Livro();
 	}
 	
@@ -71,6 +76,10 @@ public class LivroBean {
 		this.livro.adicionaAutor(autor);
 	}
 	
+	public void carregar(Livro livro) {
+		System.out.println("Carregando livro");
+		this.livro = livro;
+	}
 	public void excluir(Livro livro) {
 		System.out.println("Excluindo livro");
 		new DAO<Livro>(Livro.class).excluir(livro);
