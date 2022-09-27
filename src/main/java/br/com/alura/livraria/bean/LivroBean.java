@@ -85,6 +85,10 @@ public class LivroBean {
 		new DAO<Livro>(Livro.class).excluir(livro);
 	}
 	
+	
+	public void excluirAutorDoLivro(Autor autor) {
+		this.livro.removeAutor(autor);
+	}
 	public void comecaComDigitoUm(FacesContext fc, UIComponent componente, Object value) {
 		String valor = value.toString();
 		if(!valor.startsWith("1")) {
@@ -96,8 +100,8 @@ public class LivroBean {
 		return new DAO<Livro>(Livro.class).buscaTodos();
 	}
 	
-//	public String formAutor() {
-//		return "autor?faces-redirect=true";
-//	}
+	public String formAutor() {
+		return "autor?faces-redirect=true";
+	}
 
 }

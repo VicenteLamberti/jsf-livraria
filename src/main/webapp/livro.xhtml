@@ -66,11 +66,17 @@
 					<h:column>
 						<h:outputText value="#{autor.nome}" />
 					</h:column>
+
+					<h:column>
+						<h:commandLink value="X"
+							action="#{livroBean.excluirAutorDoLivro(autor)}" />
+					</h:column>
 				</h:dataTable>
 
 			</fieldset>
 			<h:commandButton value="Gravar" action="#{livroBean.gravar}">
-				<f:ajax execute="@form" render="@form :formTabelaLivros:tabelaLivros" />
+				<f:ajax execute="@form"
+					render="@form :formTabelaLivros:tabelaLivros" />
 			</h:commandButton>
 
 		</h:form>
@@ -106,12 +112,14 @@
 				</h:column>
 
 				<h:column>
-					<f:facet name = "header">Editar</f:facet>
-					<h:commandLink value="Editar" action="#{livroBean.carregar(livroCadastrado)}"/>
+					<f:facet name="header">Editar</f:facet>
+					<h:commandLink value="Editar"
+						action="#{livroBean.carregar(livroCadastrado)}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Ação</f:facet>
-					<h:commandLink value="Excluir" action="#{livroBean.excluir(livroCadastrado)}" />
+					<h:commandLink value="Excluir"
+						action="#{livroBean.excluir(livroCadastrado)}" />
 				</h:column>
 			</h:dataTable>
 		</h:form>
