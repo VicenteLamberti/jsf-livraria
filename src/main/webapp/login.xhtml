@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
+			LOGIN
+		</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="login">
+			<fieldset>
+				<h:messages id="messages" />
+				<legend>LOGIN</legend>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Email" for="email" />
+					<h:inputText id="email" value="#{loginBean.usuario.email}"
+						required="true" requiredMessage="Email obrigatório"
+						validatorMessage="Email - tamanho mínimo - máximo 40">
+						<f:validateLength maximum="40" minimum="3" />
+						<f:ajax event="blur" render="messages" />
+					</h:inputText>
+
+					<h:outputLabel value="Senha" for="senha" />
+					<h:inputText id="senha" value="#{loginBean.usuario.senha}"  required="true"
+					 requiredMessage="Senha Obrigatória">
+						<f:ajax event="blur" render="messages"/>
+					</h:inputText>
+
+				<h:commandButton value="ENTRAR" action="#{loginBean.logar}"/>
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+
+	</ui:define>
+	<ui:define name="textoRodape"> LOGIN</ui:define>
+</ui:composition>
+
+
+</html>

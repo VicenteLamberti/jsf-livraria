@@ -8,6 +8,9 @@
         <header id="cabecalho">
             <h:graphicImage library="img" name="logo.png" alt="logo"/>
             <h1><ui:insert name="titulo"></ui:insert></h1>
+            <h:form>
+            	<h:commandLink rendered="#{usuarioLogado != null}" value="Logout" action="#{loginBean.deslogar}"/>
+            </h:form>
         </header>
 
         <main id="conteudo">
