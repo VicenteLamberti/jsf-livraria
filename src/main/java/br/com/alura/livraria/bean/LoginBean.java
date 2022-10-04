@@ -1,6 +1,7 @@
 package br.com.alura.livraria.bean;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -25,13 +26,15 @@ public class LoginBean {
 	
 	public String logar() {
 		System.out.println("logando");
+		FacesContext contexto = FacesContext.getCurrentInstance();
 		boolean existe = new UsuarioDAO<Usuario>().existe(getUsuario());
 		if(existe) {
-			FacesContext contexto = FacesContext.getCurrentInstance();
 			contexto.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}
-		return null;
+		contexto.getExternalContext().getFlash().setKeepMessages(true);
+		contexto.addMessage(null, new FacesMessage("Usuário não encontrado"));
+		return "login?faces-redirect=true";
 		
 	}
 	
