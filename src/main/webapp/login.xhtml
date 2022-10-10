@@ -13,33 +13,30 @@
 
 
 	<ui:define name="conteudo">
-		<h:messages globalOnly="true"/>
+		<p:messages globalOnly="true"/>
 		<h:form id="login">
-			<fieldset>
-				<h:messages id="messages" />
-				<legend>LOGIN</legend>
+			<p:fieldset legend="LOGIN">
+				<p:messages id="messages" />
 				<h:panelGrid columns="2">
-					<h:outputLabel value="Email" for="email" />
-					<h:inputText id="email" value="#{loginBean.usuario.email}"
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" value="#{loginBean.usuario.email}"
 						required="true" requiredMessage="Email obrigatório"
 						validatorMessage="Email - tamanho mínimo - máximo 40">
 						<f:validateLength maximum="40" minimum="3" />
-						<f:ajax event="blur" render="messages" />
-					</h:inputText>
+					</p:inputText>
 
-					<h:outputLabel value="Senha" for="senha" />
-					<h:inputText id="senha" value="#{loginBean.usuario.senha}"  required="true"
-					 requiredMessage="Senha Obrigatória">
-						<f:ajax event="blur" render="messages"/>
-					</h:inputText>
+					<p:outputLabel value="Senha" for="senha" />
+					<p:password id="senha" value="#{loginBean.usuario.senha}"  required="true"
+					 requiredMessage="Senha Obrigatória" feedback="true" promptLabel="Digite Senha" weakLabel="Melhora isso ai" strongLabel="Ai sim, uma senha segura" goodLabel="TOP">
+					</p:password>
 
-				<h:commandButton value="ENTRAR" action="#{loginBean.logar}"/>
+				<p:commandButton value="ENTRAR" action="#{loginBean.logar}" process="@form" update="@form" ajax="false"/>
 				</h:panelGrid>
 
-			</fieldset>
+			</p:fieldset>
 		</h:form>
 
-
+	
 	</ui:define>
 	<ui:define name="textoRodape"> LOGIN</ui:define>
 </ui:composition>
