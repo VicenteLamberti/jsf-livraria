@@ -1,6 +1,8 @@
 package br.com.alura.livraria.bean;
 
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
@@ -14,6 +16,12 @@ public class AutorBean {
 	private Autor autor = new Autor();
 	public Autor getAutor() {
 		return autor;
+	}
+	
+	public List<Autor> getAutores(){
+		List<Autor> autores = new DAO<Autor>(Autor.class).buscaTodos();
+		autores.forEach(x->System.out.println(x.getNome()));
+		return autores;
 	}
 	
 	@PostConstruct
