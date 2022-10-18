@@ -14,92 +14,94 @@ import br.com.alura.livraria.dao.DAO;
 import br.com.alura.livraria.model.Autor;
 import br.com.alura.livraria.model.Livro;
 
-
 @ManagedBean
 @ViewScoped
 public class LivroBean {
-	
+
 	private Livro livro = new Livro();
 	private Long autorId;
-	
+	private List<Livro> livrosCadastrados;
+
 	public void setAutorId(Long autorId) {
 		this.autorId = autorId;
 	}
-	
+
 	public Long getAutorId() {
 		return autorId;
 	}
-	
+
 	public Livro getLivro() {
 		return livro;
 	}
-	
-	
-
 
 	@PostConstruct
 	public void posCriacao() {
 		System.out.println("criei um livroBean");
 	}
 
-
-
 	public void gravar() {
 		System.out.println("Gravando livro " + livro.getTitulo());
-		if(livro.getAutores().isEmpty()) {
+		if (livro.getAutores().isEmpty()) {
 //			throw new RuntimeException("Livro deve ter pelo menos um autor");
-			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um autor"));
+			FacesContext.getCurrentInstance().addMessage("autor",
+					new FacesMessage("Livro deve ter pelo menos um autor"));
 			return;
 		}
-		if(this.livro.getId() == null) {
-			new DAO<Livro>(Livro.class).adiciona(this.livro);
-		}
-		else {
+		if (this.livro.getId() == null) {
+			DAO<Livro> dao = new DAO<Livro>(Livro.class);
+			dao.adiciona(this.livro);
+			this.livrosCadastrados = dao.buscaTodos();
+		} else {
 			new DAO<Livro>(Livro.class).atualiza(this.livro);
 		}
 		this.livro = new Livro();
 	}
-	
-	public List<Autor> getAutores(){
+
+	public List<Autor> getAutores() {
 		List<Autor> autores = new DAO<Autor>(Autor.class).buscaTodos();
-		autores.forEach(x->System.out.println(x.getNome()));
+		autores.forEach(x -> System.out.println(x.getNome()));
 		return autores;
 	}
-	
-	public List<Autor> getAutoresDoLivro(){
+
+	public List<Autor> getAutoresDoLivro() {
 		return this.livro.getAutores();
 	}
-	
+
 	public void gravarAutor() {
 		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
 		System.out.println("Associando autor " + autor.getNome() + " ao livro " + livro.getTitulo());
 		this.livro.adicionaAutor(autor);
 	}
-	
+
 	public void carregar(Livro livro) {
 		System.out.println("Carregando livro");
 		this.livro = livro;
 	}
+
 	public void excluir(Livro livro) {
 		System.out.println("Excluindo livro");
 		new DAO<Livro>(Livro.class).excluir(livro);
 	}
-	
-	
+
 	public void excluirAutorDoLivro(Autor autor) {
 		this.livro.removeAutor(autor);
 	}
+
 	public void comecaComDigitoUm(FacesContext fc, UIComponent componente, Object value) {
 		String valor = value.toString();
-		if(!valor.startsWith("1")) {
+		if (!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage("ISBN deve começar com 1"));
 		}
 	}
-	
-	public List<Livro> getLivrosCadastrados(){
-		return new DAO<Livro>(Livro.class).buscaTodos();
+
+	public List<Livro> getLivrosCadastrados() {
+		DAO<Livro> dao = new DAO<Livro>(Livro.class);
+		if(this.livrosCadastrados == null) {
+			this.livrosCadastrados = dao.buscaTodos();
+		}
+		return this.livrosCadastrados;
 	}
-	
+
 	public String formAutor() {
 		return "autor?faces-redirect=true";
 	}

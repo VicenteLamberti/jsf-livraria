@@ -27,7 +27,7 @@
 
 					<p:outputLabel value="ISBN" for="isbn" />
 					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}"
-						validator="#{livroBean.comecaComDigitoUm}" mask="999-9-99-99999-9"/>
+						validator="#{livroBean.comecaComDigitoUm}" mask="999-9-99-99999-9" />
 
 					<p:outputLabel value="Preço" for="preco" />
 					<p:inputText id="preco" value="#{livroBean.livro.preco}"
@@ -36,92 +36,91 @@
 					</p:inputText>
 
 					<p:outputLabel value="Data Lançamento" for="dataLancamento" />
-					<p:calendar id="dataLancamento" value="#{livroBean.livro.dataLancamento}" pattern="dd/MM/yyyy" mask="true" timeZone="America/Sao_Paulo"/>
-		
+					<p:calendar id="dataLancamento"
+						value="#{livroBean.livro.dataLancamento}" pattern="dd/MM/yyyy"
+						mask="true" timeZone="America/Sao_Paulo" />
+
 
 				</p:panelGrid>
 
 			</p:fieldset>
 
 			<p:fieldset legend="Dados do Autor">
-			<p:panelGrid columns="4">
+				<p:panelGrid columns="4">
 					<p:outputLabel value="Selecione o autor" for="autor" />
-				<p:selectOneMenu value="#{livroBean.autorId}" id="autor">
-					<f:selectItems value="#{livroBean.autores}" var="autor"
-						itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
-				</p:selectOneMenu>
-				<p:commandButton value="Gravar Autor"
-					action="#{livroBean.gravarAutor}"
-					 process="@this autor" update="tabelaAutores">
-				</p:commandButton>
+					<p:selectOneMenu value="#{livroBean.autorId}" id="autor">
+						<f:selectItems value="#{livroBean.autores}" var="autor"
+							itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
+					</p:selectOneMenu>
+					<p:commandButton value="Gravar Autor"
+						action="#{livroBean.gravarAutor}" process="@this autor"
+						update="tabelaAutores">
+					</p:commandButton>
 
-				<p:commandLink value="Cadastrar novo autor"
-					action="#{livroBean.formAutor}" immediate="true" update="@all"/>
-			</p:panelGrid>
-		
+					<p:commandLink value="Cadastrar novo autor"
+						action="#{livroBean.formAutor}" immediate="true" update="@all" />
+				</p:panelGrid>
+
 
 				<p:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
-					id="tabelaAutores"
-					emptyMessage="NADAAA">
+					id="tabelaAutores" emptyMessage="NADAAA">
 					<p:column>
 						<h:outputText value="#{autor.nome}" />
 					</p:column>
 
 					<p:column>
 						<p:commandLink value="X"
-							action="#{livroBean.excluirAutorDoLivro(autor)}" process="@this" update="tabelaAutores" />
+							action="#{livroBean.excluirAutorDoLivro(autor)}" process="@this"
+							update="tabelaAutores" />
 					</p:column>
 				</p:dataTable>
 
 			</p:fieldset>
 			<p:commandButton value="Gravar" action="#{livroBean.gravar}"
-			process="@form"
-					update="@form :formTabelaLivros:tabelaLivros">
+				process="@form" update="@form :formTabelaLivros:tabelaLivros">
 			</p:commandButton>
 
 		</h:form>
 
 		<h:form id="formTabelaLivros">
-			<h:dataTable cellpadding="2" cellspacing="2" bgcolor="orange"
-				border="2" value="#{livroBean.livrosCadastrados}"
-				var="livroCadastrado" id="tabelaLivros">
+			<p:dataTable value="#{livroBean.livrosCadastrados}"
+				var="livroCadastrado" id="tabelaLivros"
+				paginator="true" rows="1"
+				>
+				<f:facet name="header">Livros</f:facet>
 
-				<h:column>
-					<f:facet name="header">Título</f:facet>
+				<p:column headerText="Título" sortBy="#{livroCadastrado.titulo}" filterBy="#{livroCadastrado.titulo}" filterMatchMode="contains">
 					<h:outputText value="#{livroCadastrado.titulo}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
-					<f:facet name="header">ISBN</f:facet>
+				<p:column headerText="ISBN">
 					<h:outputText value="#{livroCadastrado.isbn}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column headerText="Preço">
 					<f:facet name="header">Preço</f:facet>
 					<h:outputText value="#{livroCadastrado.preco}">
 						<f:convertNumber type="currency" pattern="R$ #0.00"
 							currencySymbol="$" locale="pt_BR" />
 					</h:outputText>
-				</h:column>
+				</p:column>
 
-				<h:column>
-					<f:facet name="header">Data Lançamento</f:facet>
+				<p:column headerText="Data Lançamento">
 					<h:outputText value="#{livroCadastrado.dataLancamento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
-				</h:column>
+				</p:column>
 
-				<h:column>
-					<f:facet name="header">Editar</f:facet>
+				<p:column headerText="Editar">
 					<h:commandLink value="Editar"
 						action="#{livroBean.carregar(livroCadastrado)}" />
-				</h:column>
-				<h:column>
+				</p:column>
+				<p:column>
 					<f:facet name="header">Ação</f:facet>
 					<h:commandLink value="Excluir"
 						action="#{livroBean.excluir(livroCadastrado)}" />
-				</h:column>
-			</h:dataTable>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 
 	</ui:define>

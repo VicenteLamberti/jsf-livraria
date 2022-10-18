@@ -10,6 +10,11 @@ import br.com.alura.livraria.model.Usuario;
 
 public class Autorizador implements PhaseListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void afterPhase(PhaseEvent event) {
 		// TODO Auto-generated method stub
