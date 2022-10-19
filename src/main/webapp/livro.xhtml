@@ -85,7 +85,7 @@
 		<h:form id="formTabelaLivros">
 			<p:dataTable value="#{livroBean.livrosCadastrados}"
 				var="livroCadastrado" id="tabelaLivros"
-				paginator="true" rows="1"
+				paginator="true" rows="10"
 				>
 				<f:facet name="header">Livros</f:facet>
 
@@ -97,7 +97,7 @@
 					<h:outputText value="#{livroCadastrado.isbn}" />
 				</p:column>
 
-				<p:column headerText="Preço">
+				<p:column headerText="Preço" filterBy="#{livroCadastrado.preco}" sortBy="#{livroCadastrado.preco}" filterFunction="#{livroBean.precoEhMenor}">
 					<f:facet name="header">Preço</f:facet>
 					<h:outputText value="#{livroCadastrado.preco}">
 						<f:convertNumber type="currency" pattern="R$ #0.00"

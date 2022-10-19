@@ -17,7 +17,7 @@ public class Livro {
 	private Long id;
 	private String titulo;
 	private String isbn;
-	private double preco;
+	private Double preco;
 	private Date dataLancamento;
 	
 	@ManyToMany
@@ -59,11 +59,11 @@ public class Livro {
 		this.isbn = isbn;
 	}
 
-	public double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 

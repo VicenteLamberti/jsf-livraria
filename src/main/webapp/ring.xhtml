@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
+			LIVRO
+		</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="ringForm">
+
+			<p:ring id="basic" value="#{livroBean.livrosCadastrados}" var="livro">
+				<p:outputPanel style="text-align: center;" layout="block">
+        			#{livro.titulo}
+        			<br />
+					<p:commandButton update=":ringForm:livroDetail"
+						icon="ui-icon-search" title="View"
+						oncomplete="PF('livroDialog').show();">
+						<f:setPropertyActionListener value="#{livro}"
+							target="#{livroBean.livro}" />
+					</p:commandButton>
+				</p:outputPanel>
+			</p:ring>
+
+			<p:dialog id="livroDialog" header="Informações do Livro"
+				widgetVar="livroDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false" width="300">
+				<p:outputPanel id="livroDetail" style="text-align:center"
+					layout="block">
+					<p:panelGrid columns="2" rendered="#{not empty livroBean.livro}"
+						columnClasses="value" style="width:100%;">
+						<f:facet name="header">
+               				 #{livroBean.livro.titulo} 
+           				 </f:facet>
+
+						<h:outputText value="Preço" />
+						<h:outputText value="#{livroBean.livro.preco}" />
+
+						<h:outputText value="ISBN" />
+						<h:outputText value="#{livroBean.livro.isbn}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+	<ui:define name="textoRodape"> Livro</ui:define>
+</ui:composition>
+
+
+</html>
