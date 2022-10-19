@@ -19,6 +19,9 @@ public class Livro {
 	private String isbn;
 	private Double preco;
 	private Date dataLancamento;
+	private String genero;
+
+
 	
 	@ManyToMany
 	private List<Autor> autores = new ArrayList<>();
@@ -28,7 +31,13 @@ public class Livro {
 	public Livro() {
 	}
 
-	
+	public void setGenero(String genero) {
+	    this.genero = genero;
+	}
+
+	public String getGenero() {
+	    return genero;
+	}
 	
 	
 	public Long getId() {

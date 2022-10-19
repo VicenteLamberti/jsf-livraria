@@ -1,5 +1,7 @@
 package br.com.alura.livraria.bean;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,6 +16,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.alura.livraria.dao.DAO;
 import br.com.alura.livraria.model.Autor;
 import br.com.alura.livraria.model.Livro;
+import br.com.alura.livraria.model.LivroDataModel;
 
 @ManagedBean
 @ViewScoped
@@ -22,6 +25,32 @@ public class LivroBean {
 	private Livro livro = new Livro();
 	private Long autorId;
 	private List<Livro> livrosCadastrados;
+	
+    private LivroDataModel livroDataModel = new LivroDataModel();
+    
+    private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
+
+    
+ 
+
+	public List<String> getGeneros() {
+		if(generos == null) {
+			generos = new ArrayList<String>();
+		}
+		return generos;
+	}
+
+	public void setGeneros(List<String> generos) {
+		this.generos = generos;
+	}
+
+	public LivroDataModel getLivroDataModel() {
+		return livroDataModel;
+	}
+
+	public void setLivroDataModel(LivroDataModel livroDataModel) {
+		this.livroDataModel = livroDataModel;
+	}
 
 	public void setAutorId(Long autorId) {
 		this.autorId = autorId;

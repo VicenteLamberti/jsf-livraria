@@ -47,6 +47,12 @@
 
 			<p:fieldset legend="Dados do Autor">
 				<p:panelGrid columns="4">
+
+					<p:outputLabel value="Gênero:" for="genero" />
+					<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero">
+						<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+						<f:selectItems value="#{livroBean.generos}" />
+					</p:selectOneMenu>
 					<p:outputLabel value="Selecione o autor" for="autor" />
 					<p:selectOneMenu value="#{livroBean.autorId}" id="autor">
 						<f:selectItems value="#{livroBean.autores}" var="autor"
@@ -83,13 +89,26 @@
 		</h:form>
 
 		<h:form id="formTabelaLivros">
-			<p:dataTable value="#{livroBean.livrosCadastrados}"
-				var="livroCadastrado" id="tabelaLivros"
-				paginator="true" rows="10"
-				>
+			<p:dataTable value="#{livroBean.livroDataModel}"
+				var="livroCadastrado" id="tabelaLivros" paginator="true" rows="10"
+				lazy="true" widgetVar="tabelaLivros">
 				<f:facet name="header">Livros</f:facet>
 
-				<p:column headerText="Título" sortBy="#{livroCadastrado.titulo}" filterBy="#{livroCadastrado.titulo}" filterMatchMode="contains">
+				<p:column headerText="Gênero" sortBy="#{livroCadastrado.genero}"
+					filterBy="#{livroCadastrado.genero}" filterMatchMode="startsWith">
+
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaLivros').filter()">
+							<f:selectItem itemLabel="Selecione..." itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{livroBean.generos}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{livroCadastrado.genero}" />
+				</p:column>
+
+				<p:column headerText="Título" sortBy="#{livroCadastrado.titulo}"
+					filterBy="#{livroCadastrado.titulo}" filterMatchMode="contains">
 					<h:outputText value="#{livroCadastrado.titulo}" />
 				</p:column>
 
@@ -97,7 +116,9 @@
 					<h:outputText value="#{livroCadastrado.isbn}" />
 				</p:column>
 
-				<p:column headerText="Preço" filterBy="#{livroCadastrado.preco}" sortBy="#{livroCadastrado.preco}" filterFunction="#{livroBean.precoEhMenor}">
+				<p:column headerText="Preço" filterBy="#{livroCadastrado.preco}"
+					sortBy="#{livroCadastrado.preco}"
+					filterFunction="#{livroBean.precoEhMenor}">
 					<f:facet name="header">Preço</f:facet>
 					<h:outputText value="#{livroCadastrado.preco}">
 						<f:convertNumber type="currency" pattern="R$ #0.00"
