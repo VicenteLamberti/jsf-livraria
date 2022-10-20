@@ -1,16 +1,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
 
     <h:head/>
     <h:body>
         <header id="cabecalho">
             <h:graphicImage library="img" name="logo.png" alt="logo"/>
             <h1><ui:insert name="titulo"></ui:insert></h1>
-            <h:form>
-            	<h:commandLink rendered="#{usuarioLogado != null}" value="Logout" action="#{loginBean.deslogar}"/>
+            	<p:growl id="messages" showDetail="true" autoUpdate="true"/>
+            
+            <h:form rendered="#{usuarioLogado != null}">
+            	<p:menuButton value="Menu">
+            		<p:menuitem value="SAVE" actionListener="#{menuView.save}" update="messages" icon="ui-icon-disk"/>
+            		<p:menuitem value="Livros" action="livro" icon="ui-icon-disk"/>
+            		<p:menuitem value="Autores" action="autor" icon="ui-icon-disk"/>
+            		<p:separator/>
+            		<p:menuitem value="logout" action="#{loginBean.deslogar}" icon="ui-icon-extlink"/>
+            	</p:menuButton>
+            
             </h:form>
+         
         </header>
 
         <main id="conteudo">
