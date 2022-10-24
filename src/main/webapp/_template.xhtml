@@ -9,6 +9,15 @@
         <header id="cabecalho">
             <h:graphicImage library="img" name="logo.png" alt="logo"/>
             <h1><ui:insert name="titulo"></ui:insert></h1>
+            
+            	<h:form rendered="#{usuarioLogado != null}">
+            		<p:themeSwitcher id="basic" style="width:165px" value="#{temaBean.tema}">
+            			<f:selectItem itemLabel="Escolha o tema" itemValue=""/>
+            			<f:selectItem itemLabel="Aristo" itemValue="aristo"/>
+            			<f:selectItem itemLabel="Vader" itemValue="vader"/>
+            			<f:ajax/>
+            		</p:themeSwitcher>
+            	</h:form>
             	<p:growl id="messages" showDetail="true" autoUpdate="true"/>
             
             <h:form rendered="#{usuarioLogado != null}">
