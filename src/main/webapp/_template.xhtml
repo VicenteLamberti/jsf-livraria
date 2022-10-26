@@ -24,7 +24,7 @@
             	<p:menuButton value="Menu">
             		<p:menuitem value="SAVE" actionListener="#{menuView.save}" update="messages" icon="ui-icon-disk"/>
             		<p:menuitem value="Livros" action="livro" icon="ui-icon-disk"/>
-            		<p:menuitem value="Autores" action="autor" icon="ui-icon-disk"/>
+            		<p:menuitem value="Autores" action="autor?faces-redirect=true" icon="ui-icon-disk"/>
             		<p:separator/>
             		<p:menuitem value="logout" action="#{loginBean.deslogar}" icon="ui-icon-extlink"/>
             	</p:menuButton>
