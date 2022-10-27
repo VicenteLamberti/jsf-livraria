@@ -27,12 +27,12 @@
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
-	<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
-<dependency>
-    <groupId>org.glassfish</groupId>
-    <artifactId>javax.faces</artifactId>
-    <version>2.2.13</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.2.13</version>
+		</dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
@@ -48,14 +48,20 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.30</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
-<dependency>
-    <groupId>org.primefaces</groupId>
-    <artifactId>primefaces</artifactId>
-    <version>5.3</version>
-</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>2.3.3.Final</version>
+		</dependency>
 
 
 	</dependencies>
