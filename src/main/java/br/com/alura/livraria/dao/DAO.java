@@ -16,8 +16,7 @@ public class DAO<T> {
 	}
 
 	public void adiciona(T t) {
-		EntityManagerFactory createEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = createEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		em.persist(t);
 		em.getTransaction().commit();
@@ -25,8 +24,7 @@ public class DAO<T> {
 	}
 
 	public void remove(T t) {
-		EntityManagerFactory createEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = createEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		em.remove(em.merge(t));
 		em.getTransaction().commit();
@@ -34,8 +32,7 @@ public class DAO<T> {
 	}
 
 	public List<T> buscaTodos() {
-		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		String jpql = "SELECT t FROM " + classe.getSimpleName() + " t";
 
@@ -46,8 +43,7 @@ public class DAO<T> {
 	}
 
 	public T buscaPorId(Long id) {
-		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T obj = em.find(classe, id);
 		em.close();
@@ -55,8 +51,7 @@ public class DAO<T> {
 	}
 
 	public void excluir(T obj) {
-		EntityManagerFactory cemf = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = cemf.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.remove(newObj);
@@ -65,8 +60,7 @@ public class DAO<T> {
 	}
 
 	public void atualiza(T obj) {
-		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.persist(newObj);
@@ -77,8 +71,7 @@ public class DAO<T> {
 
 	// classe DAO
 	public int quantidadeDeElementos() {
-		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 		long result = (Long) em.createQuery("select count(n) from " + classe.getSimpleName() + " n").getSingleResult();
 		em.close();
 
@@ -87,8 +80,7 @@ public class DAO<T> {
 	
 	// classe DAO
 	public List<T> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		EntityManagerFactory creaEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = creaEntityManagerFactory.createEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 	    CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 	    Root<T> root = query.from(classe);
 

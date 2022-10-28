@@ -1,11 +1,12 @@
 package br.com.alura.livraria.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -14,9 +15,9 @@ import br.com.alura.livraria.dao.DAO;
 import br.com.alura.livraria.model.Livro;
 import br.com.alura.livraria.model.Venda;
 
-@ManagedBean
+@Named
 @ViewScoped
-public class VendaBean {
+public class VendaBean implements Serializable{
 	
 	public BarChartModel getVendasModel() {
 		BarChartModel model = new BarChartModel();

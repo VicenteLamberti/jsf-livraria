@@ -1,5 +1,6 @@
 package br.com.alura.livraria.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,19 +9,20 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Named;
 
 import br.com.alura.livraria.dao.DAO;
 import br.com.alura.livraria.model.Autor;
 import br.com.alura.livraria.model.Livro;
 import br.com.alura.livraria.model.LivroDataModel;
 
-@ManagedBean
+@Named
 @ViewScoped
-public class LivroBean {
+public class LivroBean implements Serializable{
 
 	private Livro livro = new Livro();
 	private Long autorId;
