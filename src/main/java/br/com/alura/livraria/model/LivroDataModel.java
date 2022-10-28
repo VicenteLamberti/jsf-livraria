@@ -1,21 +1,31 @@
 package br.com.alura.livraria.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import br.com.alura.livraria.dao.DAO;
+import br.com.alura.livraria.dao.LivroDao;
 
-public class LivroDataModel extends LazyDataModel<Livro> {
+public class LivroDataModel extends LazyDataModel<Livro> implements Serializable{
 
-	private DAO dao;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	LivroDao livroDao;
 
-	public LivroDataModel() {
-
-		super.setRowCount(getDao().quantidadeDeElementos());
+	@PostConstruct
+	public void init() {
+		super.setRowCount(livroDao.quantidadeDeElementos());
 	}
 
 	@Override
@@ -31,18 +41,8 @@ public class LivroDataModel extends LazyDataModel<Livro> {
 			campoFiltrado = key;
 		}
 
-		return dao.listaTodosPaginada(first, pageSize, campoFiltrado, valorDigitado);
+		return livroDao.listaTodosPaginada(first, pageSize, campoFiltrado, valorDigitado);
 
-	}
-
-	public DAO getDao() {
-		if (dao == null) {
-			dao = new DAO<Livro>(Livro.class);
-		}
-		return dao;
-	}
-
-	public void setDao(DAO dao) {
-		this.dao = dao;
 	}
 }
+	

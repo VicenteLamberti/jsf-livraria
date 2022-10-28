@@ -1,37 +1,34 @@
 package br.com.alura.livraria.dao;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.alura.livraria.model.Usuario;
 
-public class UsuarioDAO<T> extends DAO {
-
-	public UsuarioDAO() {
-		super(Usuario.class);
-	}
+public class UsuarioDAO implements Serializable {
 
 	public boolean existe(Usuario usuario) {
-		EntityManagerFactory createEntityManagerFactory = Persistence.createEntityManagerFactory("livraria");
-		EntityManager em = createEntityManagerFactory.createEntityManager();
+		
+		EntityManager em = new JPAUtil().getEntityManager();
 		TypedQuery<Usuario> query = em.createQuery(
-				"SELECT usuario FROM Usuario usuario WHERE usuario.email = :email AND usuario.senha = :senha",
-				Usuario.class);
-		query.setParameter("email", usuario.getEmail());
-		query.setParameter("senha", usuario.getSenha());
+				  " select u from Usuario u "
+				+ " where u.email = :pEmail and u.senha = :pSenha", Usuario.class);
+		
+		query.setParameter("pEmail", usuario.getEmail());
+		query.setParameter("pSenha", usuario.getSenha());
 		try {
-
-			query.getSingleResult();
-		} catch (Exception e) {
+			Usuario resultado =  query.getSingleResult();
+		} catch (NoResultException ex) {
 			return false;
 		}
-
+		
 		em.close();
+		
 		return true;
 	}
 
 }
+

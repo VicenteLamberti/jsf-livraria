@@ -1,5 +1,6 @@
 package br.com.alura.livraria.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,79 +9,70 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public class DAO<T> {
+public class DAO<T> implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final Class<T> classe;
+	private EntityManager em;
 
-	public DAO(Class<T> classe) {
+	public DAO(EntityManager em, Class<T> classe) {
+		this.em = em;
 		this.classe = classe;
 	}
 
 	public void adiciona(T t) {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		em.persist(t);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void remove(T t) {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		em.remove(em.merge(t));
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public List<T> buscaTodos() {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		String jpql = "SELECT t FROM " + classe.getSimpleName() + " t";
 
 		List<T> resultado = em.createQuery(jpql).getResultList();
-		em.close();
 		return resultado;
 
 	}
 
 	public T buscaPorId(Long id) {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T obj = em.find(classe, id);
-		em.close();
 		return obj;
 	}
 
 	public void excluir(T obj) {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.remove(newObj);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void atualiza(T obj) {
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.persist(newObj);
 		em.getTransaction().commit();
-		em.close();
 
 	}
 
 	// classe DAO
 	public int quantidadeDeElementos() {
-		EntityManager em = new JPAUtil().getEntityManager();
 		long result = (Long) em.createQuery("select count(n) from " + classe.getSimpleName() + " n").getSingleResult();
-		em.close();
 
 		return (int) result;
 	}
 	
 	// classe DAO
 	public List<T> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		EntityManager em = new JPAUtil().getEntityManager();
 	    CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 	    Root<T> root = query.from(classe);
 
@@ -89,7 +81,6 @@ public class DAO<T> {
 
 	    List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 
-	    em.close();
 	    return lista;
 	}
 
