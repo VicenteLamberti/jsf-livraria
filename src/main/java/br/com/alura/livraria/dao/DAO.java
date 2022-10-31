@@ -35,18 +35,30 @@ public class DAO<T> implements Serializable{
 	}
 
 	public List<T> buscaTodos() {
-		em.getTransaction().begin();
-		String jpql = "SELECT t FROM " + classe.getSimpleName() + " t";
+//		em.getTransaction().begin();
+//		String jpql = "SELECT t FROM " + classe.getSimpleName() + " t";
+//
+//		List<T> resultado = em.createQuery(jpql).getResultList();
+//		return resultado;
+		
+		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+		query.select(query.from(classe));
 
-		List<T> resultado = em.createQuery(jpql).getResultList();
-		return resultado;
+		List<T> lista = em.createQuery(query).getResultList();
+
+		return lista;
 
 	}
 
 	public T buscaPorId(Long id) {
-		em.getTransaction().begin();
-		T obj = em.find(classe, id);
-		return obj;
+//		em.getTransaction().begin();
+//		T obj = em.find(classe, id);
+//		return obj;
+		
+
+		T instancia = em.find(classe, id);
+
+		return instancia;
 	}
 
 	public void excluir(T obj) {
