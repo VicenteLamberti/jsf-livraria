@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.com.alura.livraria.dao.AutorDao;
 import br.com.alura.livraria.model.Autor;
+import br.com.alura.livraria.tx.Transacional;
 
 @Named
 @ViewScoped // ALterei pro import view
@@ -38,6 +39,7 @@ public class AutorBean implements Serializable{
 		return dao.buscaTodos();
 	}
 
+	@Transacional
 	public String gravar() {
 		System.out.println("Gravando autor " + this.autor.getNome());
 
@@ -57,6 +59,7 @@ public class AutorBean implements Serializable{
 		this.autor = autor;
 	}
 
+	@Transacional
 	public void remover(Autor autor) {
 		System.out.println("Removendo autor");
 		dao.remove(autor);

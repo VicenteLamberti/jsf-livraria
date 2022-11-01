@@ -23,15 +23,11 @@ public class DAO<T> implements Serializable{
 	}
 
 	public void adiciona(T t) {
-		em.getTransaction().begin();
 		em.persist(t);
-		em.getTransaction().commit();
 	}
 
 	public void remove(T t) {
-		em.getTransaction().begin();
 		em.remove(em.merge(t));
-		em.getTransaction().commit();
 	}
 
 	public List<T> buscaTodos() {
@@ -62,18 +58,14 @@ public class DAO<T> implements Serializable{
 	}
 
 	public void excluir(T obj) {
-		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.remove(newObj);
-		em.getTransaction().commit();
 	}
 
 	public void atualiza(T obj) {
-		em.getTransaction().begin();
 		T newObj = em.merge(obj);
 		em.persist(newObj);
-		em.getTransaction().commit();
-
+ 
 	}
 
 	// classe DAO

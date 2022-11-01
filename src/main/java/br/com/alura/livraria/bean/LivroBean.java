@@ -21,6 +21,7 @@ import br.com.alura.livraria.dao.LivroDao;
 import br.com.alura.livraria.model.Autor;
 import br.com.alura.livraria.model.Livro;
 import br.com.alura.livraria.model.LivroDataModel;
+import br.com.alura.livraria.tx.Transacional;
 
 @Named
 @ViewScoped
@@ -94,6 +95,7 @@ public class LivroBean implements Serializable{
 		System.out.println("criei um livroBean");
 	}
 
+	@Transacional
 	public void gravar() {
 		System.out.println("Gravando livro " + livro.getTitulo());
 		if (livro.getAutores().isEmpty()) {
@@ -133,6 +135,7 @@ public class LivroBean implements Serializable{
 		this.livro = livro;
 	}
 
+	@Transacional
 	public void excluir(Livro livro) {
 		System.out.println("Excluindo livro");
 		dao.excluir(livro);
