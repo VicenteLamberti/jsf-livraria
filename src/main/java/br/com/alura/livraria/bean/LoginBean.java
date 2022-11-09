@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.alura.livraria.dao.UsuarioDAO;
@@ -22,6 +22,12 @@ public class LoginBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario = new Usuario();
 	
+	@Inject
+	UsuarioDAO dao;
+	
+	@Inject
+	FacesContext contexto;
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -33,8 +39,7 @@ public class LoginBean implements Serializable{
 	
 	public String logar() {
 		System.out.println("logando");
-		FacesContext contexto = FacesContext.getCurrentInstance();
-		boolean existe = new UsuarioDAO().existe(getUsuario());
+		boolean existe = dao.existe(getUsuario());
 		if(existe) {
 			contexto.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
@@ -46,7 +51,6 @@ public class LoginBean implements Serializable{
 	}
 	
 	public String deslogar() {
-		FacesContext contexto = FacesContext.getCurrentInstance();
 		contexto.getExternalContext().getSessionMap().remove("usuarioLogado");
 		return "login?faces-redirect=true";
 	}

@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -20,14 +21,11 @@ import br.com.alura.livraria.model.Venda;
 @ViewScoped
 public class VendaBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@Inject
-	private LivroDao livroDao;
+	EntityManager manager;
 	
 	public BarChartModel getVendasModel() {
 		BarChartModel model = new BarChartModel();
@@ -51,15 +49,17 @@ public class VendaBean implements Serializable{
 
 	
 	public List<Venda>getVendas(){
-		List<Livro> livros = livroDao.buscaTodos();
+//		List<Livro> livros = livroDao.buscaTodos();
+//		
+//		List<Venda> vendas = new ArrayList<Venda>();
+//		
+//		Random random = new Random(1234);
+//		livros.forEach(livro->{
+//			Integer quantidade = random.nextInt(500);
+//			vendas.add(new Venda(livro, quantidade));
+//		});
 		
-		List<Venda> vendas = new ArrayList<Venda>();
-		
-		Random random = new Random(1234);
-		livros.forEach(livro->{
-			Integer quantidade = random.nextInt(500);
-			vendas.add(new Venda(livro, quantidade));
-		});
+		List<Venda> vendas = this.manager.createQuery("SELECT venda FROM Venda venda",Venda.class).getResultList();
 		return vendas;
 	}
 }
